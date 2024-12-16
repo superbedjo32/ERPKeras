@@ -23,57 +23,26 @@
                     <textarea class="form-control" id="alamat" name="alamat" rows="3"value="{{ $vendors->alamat }}">{{ $vendors->alamat }}</textarea>
                 </div>
             </div>
-            <div class="d-flex my-4 w-25">
-                <div class="input-group input-group-outline">
-                    <input class="form-control-radio" type="radio" name="status" id="flexRadioDefault1" value="1"
-                    {{ $vendors->status == 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Company
-                    </label>
-                </div>
-                <div class="input-group input-group-outline">
-                    <input class="form-control-radio" type="radio" name="status" value="2" id="flexRadioDefault2"
-                    {{ $vendors->status == 2 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Persero
-                    </label>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Bahan</label>
+                <div class="col-sm-10">
+                    @foreach ($bahan as $item)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ $item->id }}" name="bahan[]"
+                                id="bahan_{{ $item->id }}" {{ in_array($item->id, $selectedBahan) ? 'checked' : '' }}>
+                            <!-- Cek jika produk dipilih -->
+                            <label class="form-check-label" for="bahan_{{ $item->id }}">
+                                {{ $item->nama_produk }}
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            <div id="perseroDropdown" style="display: none;">
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Perusahaan</label>
-                    <div class="col-sm-10">
-                        <select class="form-select" name="company" id="vendorSelect">
-                            <option selected value={{$vendors->company}}>{{$vendors->company}}</option>
-                            @foreach($companys as $comp)
-                                <option value="{{ $comp->nama_vendor }}">{{ $comp->nama_vendor }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
             <div class="form-group">
                 <button class="btn btn-primary" type="submit" name="simpan">Update</button>
                 <a href="{{ route('Vendor') }}" class="btn btn-danger">Batal</a>
             </div>
         </form>
     </div>
-    <script>
-        const radioCompany = document.getElementById('flexRadioDefault1');
-        const radioPersero = document.getElementById('flexRadioDefault2');
-        const perseroDropdown = document.getElementById('perseroDropdown');
-    
-        radioCompany.addEventListener('change', function() {
-            if (radioCompany.checked) {
-                perseroDropdown.style.display = 'none'; 
-            }
-        });
-    
-        radioPersero.addEventListener('change', function() {
-            if (radioPersero.checked) {
-                perseroDropdown.style.display = 'block'; 
-            }
-        });
-    </script>
 @endsection

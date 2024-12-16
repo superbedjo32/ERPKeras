@@ -7,8 +7,8 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Nama</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nama_produk" name="nama_produk" placeholder="Masukan Produk"
-                        required>
+                    <input type="text" class="form-control" id="nama_produk" name="nama_produk"
+                        placeholder="Masukan Produk" required>
                 </div>
             </div>
             <div class="row mb-3">

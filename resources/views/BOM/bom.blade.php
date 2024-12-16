@@ -24,12 +24,15 @@
                     <label class="col-sm-2 col-form-label">Bahan</label>
                     <div class="col-sm-10">
                         {{-- <textarea class="form-control" id="deskripsi" name="deskripsi" placeholder="Deskripsi" rows="3"></textarea> --}}
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Default checkbox
-                            </label>
-                          </div>
+                        @foreach ($bahan as $item)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ $item->id }}" name="bahan[]"
+                                    id="bahan_{{ $item->id }}">
+                                <label class="form-check-label" for="bahan_{{ $item->id }}">
+                                    {{ $item->nama_produk }}
+                                </label>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="form-group mt-4">

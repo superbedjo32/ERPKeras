@@ -20,18 +20,24 @@
                     </thead>
                     <tbody>
                         @if ($boms->count())
-                            @foreach ($boms as $item)
+                            @foreach ($boms as $index => $bom)
                                 <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $item->kode_bom }}</td>
-                                    <td>{{ $item->nama_produk }}</td>
-                                    <td>{{ $item->total_harga }}</td>
-                                    <td>{{ $item->tanggal }}</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $bom->kode_bom }}</td>
+                                    <td>{{ $bom->produk_nama }}</td>
+                                    <td>{{ $bom->tanggal }}</td>
+                                    <td>Rp {{ number_format($bom->total_harga, 0, ',', '.') }}</td>
+                                    {{-- <td>
+                                        @foreach ($bom->bahans as $bahan)
+                                            <span class="badge bg-primary">{{ $bahan->nama_produk }}</span>
+                                        @endforeach
+                                    </td> --}}
                                     <td>
-                                        <a href="{{ url('/bom/item_list/' . $item->id) }}" class="btn btn-primary">Detail</a>
+                                        <a href="{{ url('/bom/item_list/' . $bom->id) }}"
+                                            class="btn btn-primary">Detail</a>
                                         {{-- <a href="{{ url('/bom/item_list/' . $item->id) }}"
                                             class="btn btn-warning bi bi-pencil-square" role="button"> </a> --}}
-                                        <a href="{{ url('/bom/delete/' . $item->id) }}"
+                                        <a href="{{ url('/bom/delete/' . $bom->id) }}"
                                             class="btn btn-danger delete-confirm bi bi-trash3-fill" role="button"> </a>
                                     </td>
                                 </tr>

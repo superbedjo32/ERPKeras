@@ -54,7 +54,7 @@ class ProdukController extends Controller
             'id' => $request->id,
             'nama_produk' => $request->nama_produk,
             'id_reference' => 0,
-            'qty' => ($request->harga * 10) / 100,
+            'qty' => 0,
             'harga' => $request->harga,
             'status' => $request->status,
             'deskripsi' => $request->deskripsi,

@@ -8,12 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class RfqListModel extends Model
 {
     use HasFactory;
-    protected $table = "t_rfq_list";
-    protected $primaryKey = 'id_rfq_list';
+    protected $table = "rfq_list";
+    protected $primaryKey = 'id';
     public $incrementing = false;
-    protected $fillable = ['id_rfq_list', 'id_rfq', 'kode_produk',
-        'qty','satuan'
+    protected $fillable = [
+        'vendor_id',
+        'produk_id',
+        'qty',
+        'harga'
     ];
     public $timestamps = false;
 
+    public function vendor()
+    {
+        return $this->belongsTo(VendorModel::class, 'vendor_id');
+    }
+
+    // Relasi ke model Produk
+    public function produk()
+    {
+        return $this->belongsTo(ProdukModel::class, 'produk_id');
+    }
 }

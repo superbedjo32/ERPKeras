@@ -13,19 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('t_rfq', function (Blueprint $table) {
+        Schema::create('vendor_produk', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vendor_id');
-            $table->date('tgl_transaksi');
-            $table->string('total_harga');
-            $table->string('pembayaran');
-            $table->integer('status')->default(1);
+            $table->unsignedBigInteger('produk_id');
 
-            $table->timestamps(); // created_at, updated_at
-
+            // Relasi Foreign Key
             $table->foreign('vendor_id')->references('id')->on('t_vendor')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('t_produk')->onDelete('cascade');
+            $table->timestamps();
         });
-        //
     }
 
     /**
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('vendor_produk');
     }
 };

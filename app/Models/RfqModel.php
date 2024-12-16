@@ -9,10 +9,14 @@ class RfqModel extends Model
 {
     use HasFactory;
     protected $table = 't_rfq';
-    protected $primaryKey = 'id_rfq';
+    protected $primaryKey = 'id';
     public $incrementing = false;
-    protected $fillable = ['id_rfq', 'id_vendor', 'tanggal', 
-        'status', 'total_harga','pembayaran'
+    protected $fillable = [
+        'vendor_id',
+        'tgl_transaksi',
+        'total_harga',
+        'pembayaran',
+        'status',
     ];
     public $timestamps = false;
 }

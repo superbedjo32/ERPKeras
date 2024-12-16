@@ -24,7 +24,7 @@
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{ $item->nama_vendor }}</td>
-                                <td>{{ $item->tanggal }}</td>
+                                <td>{{ $item->tgl_transaksi }}</td>
                                 <td>{{ $item->total_harga }}</td>
                                 <td>
                                     @if ($item->pembayaran == 1)
@@ -44,9 +44,9 @@
                                         <span class="badge badge-secondary" style="color: black">Selesai</span>
                                     @endif
                                 </td>
-                                <td><a href="{{ url('/rfq/data/list/' . $item->id_rfq) }}"
+                                <td><a href="{{ url('/rfq/data/list/' . $item->id) }}"
                                         class="btn btn-warning bi bi-pencil-square" role="button"></a>
-                                    <form action="{{ url('/rfq/delete/' . $item->id_rfq) }}" method="post">
+                                    <form action="{{ url('/rfq/delete/' . $item->id) }}" method="post">
                                         @method('delete')
                                         {{ csrf_field() }}
                                         <button type="submit"
@@ -57,7 +57,6 @@
                                     @if ($item->status == 3)
                                         <a href="#" class="btn btn-success bi bi-printer"></a>
                                     @elseif($item->status != 3)
-
                                     @endif
                                 </td>
                             </tr>

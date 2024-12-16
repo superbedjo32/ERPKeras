@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('t_vendor', function (Blueprint $table) {
+        Schema::create('mo', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_vendor');
-            $table->integer('telpon');
-            $table->text('alamat')->nullable();
-            $table->integer('status')->nullable();
-            $table->string('company')->nullable();
-            $table->timestamps(); // created_at, updated_at
+            $table->string('kode_mo');
+            $table->date('tgl');
+            $table->unsignedBigInteger('kode_bom');
+            $table->integer('qty');
+            $table->integer('status')->default(1);
+
+            $table->foreign('kode_bom')->references('id')->on('t_bom')->onDelete('cascade');
+            $table->timestamps();
         });
-        //
     }
 
     /**
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('mo');
     }
 };

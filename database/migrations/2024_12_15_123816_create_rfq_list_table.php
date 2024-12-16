@@ -13,19 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('t_rfq', function (Blueprint $table) {
+        Schema::create('rfq_list', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vendor_id');
-            $table->date('tgl_transaksi');
-            $table->string('total_harga');
-            $table->string('pembayaran');
-            $table->integer('status')->default(1);
-
-            $table->timestamps(); // created_at, updated_at
+            $table->unsignedBigInteger('produk_id');
+            $table->Integer('qty');
+            $table->string('harga');
+            $table->timestamps();
 
             $table->foreign('vendor_id')->references('id')->on('t_vendor')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('t_produk')->onDelete('cascade');
         });
-        //
     }
 
     /**
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('rfq_list');
     }
 };

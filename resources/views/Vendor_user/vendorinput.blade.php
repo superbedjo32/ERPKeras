@@ -24,7 +24,22 @@
                     <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Masukan Alamat"></textarea>
                 </div>
             </div>
-            <div class="d-flex my-4 w-25">
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Produk</label>
+                <div class="col-sm-10">
+                    @foreach ($bahan as $item)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ $item->id }}" name="produk[]"
+                                id="produk_{{ $item->id }}">
+                            <label class="form-check-label" for="produk_{{ $item->id }}">
+                                {{ $item->nama_produk }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- <div class="d-flex my-4 w-25">
                 <div class="input-group input-group-outline">
                     <input class="form-control-radio" type="radio" name="status" id="flexRadioDefault1" value="1"
                         checked>
@@ -38,9 +53,9 @@
                         Persero
                     </label>
                 </div>
-            </div>
+            </div> --}}
 
-            <div id="perseroDropdown" style="display: none;">
+            {{-- <div id="perseroDropdown" style="display: none;">
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Perusahaan</label>
                     <div class="col-sm-10">
@@ -52,12 +67,12 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <button class="btn btn-primary" type="submit" name="simpan">Tambah</button>
             <a href="{{ route('Vendor') }}" class="btn btn-danger">Batal</a>
         </form>
     </div>
-    <script>
+    {{-- <script>
         const radioCompany = document.getElementById('flexRadioDefault1');
         const radioPersero = document.getElementById('flexRadioDefault2');
         const perseroDropdown = document.getElementById('perseroDropdown');
@@ -73,5 +88,5 @@
                 perseroDropdown.style.display = 'block';
             }
         });
-    </script>
+    </script> --}}
 @endsection

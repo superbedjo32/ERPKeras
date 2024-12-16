@@ -32,6 +32,18 @@
             <br>
         </form>
         <div class="card">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="card-body">
                 <br>
                 <table class="table table-bordered datatable">
@@ -51,17 +63,13 @@
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $item->kode_mo }}</td>
-                                    @if ($item->status == 3)
-                                        <td>{{ $item->nama_produk }}</td>
-                                    @else
-                                        <td>{{ $item->nama_produk }}</td>
-                                    @endif
+                                    <td>{{ $item->nama_produk }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>
                                         @if ($item->status == 1)
-                                            <span class="badge badge-secondary" style="color: black">Backlog</span>
+                                            <span class="badge badge-secondary" style="color: black">Belum Konfirmasi</span>
                                         @elseif($item->status == 2)
-                                            <span class="badge badge-primary" style="color: black">Ditandai</span>
+                                            <span class="badge badge-primary" style="color: black">Di Konfirmasi</span>
                                         @elseif($item->status == 3)
                                             <span class="badge badge-warning" style="color: black">Cek Ketersediaan</span>
                                         @elseif($item->status == 4)
@@ -80,18 +88,24 @@
                                                     class="btn btn-info">Tandai</button>
                                             </form>
                                         @elseif($item->status == 2)
-                                            <form action="/mo/update/{{ $item->id }}" method="post">
+                                            <form action="/mo/update/produk/ketersediaan/{{ $item->id }}"
+                                                method="post">
                                                 @method('put')
                                                 {{ csrf_field() }}
                                                 <button type="submit" onclick="return confirm('Proses CA?');"
                                                     class="btn btn-info">Cek Ketersediaan</button>
                                             </form>
                                         @elseif($item->status == 3)
-                                            <a href="{{ url('/mo/update/produk/cek/' . $item->id) }}"
-                                                class="btn btn-primary bi bi-search"></a>
+                                            <form action="/mo/update/produk/produksi/{{ $item->id }}"
+                                                method="post">
+                                                @method('put')
+                                                {{ csrf_field() }}
+                                                <button type="submit" onclick="return confirm('Proses CA?');"
+                                                    class="btn btn-info">Produksi</button>
+                                            </form>
                                         @elseif($item->status == 4)
-                                            <form action="/mo/produksi/proses/{{ $item->id }}" method="post">
-                                                @method('post')
+                                            <form action="/mo/update/produk/on-hand/{{ $item->id }}" method="post">
+                                                @method('put')
                                                 {{ csrf_field() }}
                                                 <button type="submit" onclick="return confirm('Sudah selesai?');"
                                                     class="btn btn-info">Selesai</button>

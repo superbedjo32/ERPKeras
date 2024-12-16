@@ -29,12 +29,13 @@
                             <p class="card-text">
                                 <strong>ID Reference:</strong> {{ $product->id_reference }}<br>
                                 <strong>Harga :</strong> {{ $product->harga }}<br>
-                                <strong>Harga Produksi:</strong> {{ $product->qty }}<br>
+                                <strong>On Hand:</strong> {{ $product->qty }}<br>
                                 <strong>Deskripsi:</strong> {{ $product->deskripsi }}
                             </p>
                         </div>
                         <div class="card-footer d-flex justify-content-end gap-1">
-                            <a href="{{ url('/produkedit/' . $product->id) }}" class="btn btn-warning btn-sm bi bi-pencil-square">
+                            <a href="{{ url('/produkedit/' . $product->id) }}"
+                                class="btn btn-warning btn-sm bi bi-pencil-square">
                             </a>
                             <form action="/produkdelete/{{ $product->id }}" method="post">
                                 @method('delete')

@@ -70,6 +70,9 @@ Route::get('/mo',[MoController::class,'manufactureOrder'])->name('tampilMO');
 Route::post('/mo/upload',[MoController::class,'moUpload'])->name('moUpload');
 Route::put('/mo/update/{kode_mo}',[MoController::class,'moUpdate']);
 Route::put('/mo/update/produk/{kode_mo}',[MoController::class,'moUpdateProduk']);
+Route::put('/mo/update/produk/ketersediaan/{kode_mo}',[MoController::class,'cekKetersediaan']);
+Route::put('/mo/update/produk/produksi/{kode_mo}',[MoController::class,'production']);
+Route::put('/mo/update/produk/on-hand/{kode_mo}',[MoController::class,'onHand']);
 Route::get('/mo/update/produk/cek/{kode_mo}',[MoController::class,'caItems']);
 Route::post('/mo/produksi/{kode_mo}',[MoController::class,'moProduce']);
 Route::post('/mo/produksi/proses/{kode_mo}',[MoController::class,'moProsesProduce']);
@@ -94,13 +97,18 @@ Route::delete('/user/delete/{id}',[UserController::class,'deleteUser']);
 //rfq
 Route::get('/rfq/data',[RfqController::class,'rfqTampil'])->name('RfqTampil');
 Route::get('/rfq/data/input',[RfqController::class,'inputRfqTampil'])->name('InputRfq');
-Route::post('/rfq/data/input/proses',[RfqController::class,'InputRFQ']);
+Route::get('/get-bahan-by-vendor/{vendorId}', [RfqController::class, 'getBahanByVendor']);
+Route::get('/get-rfq-by-vendor/{vendorId}', [RfqController::class, 'getRfqByVendor']);
+Route::post('/rfq-list/data/input/proses',[RfqController::class,'inputRfqList']);
+Route::post('/rfq/data/input/proses',[RfqController::class,'InputRFQ'])->name('rfq.input.proses');
 Route::get('/rfq/data/list/{id_rfq}',[RfqController::class,'rfqList'])->name('RfqList');
 Route::post('/rfq/data/list/proses',[RfqController::class,'ListProses'])->name('ListProses');
 Route::post('/rfq/data/list/saveitem/{id_rfq}',[RfqController::class,'rfqSimpanBarang'])->name('RfqListSimpan');
 Route::post('/rfq/data/list/Pembayaran/{id_rfq}',[RfqController::class,'rfqPembayaran'])->name('RfqListPembayaran');
 Route::post('/rfq/data/list/Pembayaran/confirm/{id_rfq}',[RfqController::class,'rfqConfirmPembayaran'])->name('RfqListPembayaranComfirm');
+Route::put('/rfq/update/{id_rfq}',[RfqController::class,'updateRfq'])->name('rfq.update.proses');
 Route::delete('/rfq/delete/{id_rfq}',[RfqController::class,'rfqDelete']);
+Route::delete('/rfq-list/delete/{id_rfqList}',[RfqController::class,'rfqListDelete']);
 
 //SQ
 Route::get('/SQ/data',[SQController::class,'tampilSQ'])->name('sqTampil');
