@@ -9,6 +9,7 @@ use App\Models\VendorModel;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RfqController extends Controller
 {
@@ -48,11 +49,26 @@ class RfqController extends Controller
     public function inputRfqList(Request $request)
     {
         try {
+            // Ambil last ID dari RfqModel
+            $lastRfq = RfqModel::orderBy('id', 'desc')->first();
+
+            if (!$lastRfq) {
+                $lastRfq = RfqModel::create([
+                    'vendor_id' => $request->vendor,
+                    'tgl_transaksi' => now(),
+                    'total_harga' => '', // Set default value
+                    'pembayaran' => '', // Set default value
+                    'status' => 1 // Set default status
+                ]);
+            }
+
+            // Buat entry baru di RfqListModel
             $rfq = RfqListModel::create([
                 'vendor_id' => $request->vendor,
                 'produk_id' => $request->bahan,
                 'qty' => $request->qty,
-                'harga' => $request->harga
+                'harga' => $request->harga,
+                'rfq_id' => $lastRfq->id
             ]);
 
             return response()->json([
@@ -126,6 +142,7 @@ class RfqController extends Controller
         }
         // Update data RFQ
         $rfq->update([
+            'rfq_id' => $id_rfq,
             'vendor_id' => $request->vendor_id,
             'tgl_transaksi' => Carbon::now()->toDateTimeString(), // Set waktu transaksi ke waktu saat ini
             'total_harga' => $request->total_harga, // Asumsikan input berupa angka
@@ -154,35 +171,38 @@ class RfqController extends Controller
         $rfq->save();
         return redirect('/rfq/data/list/' . $request->id_rfq);
     }
-    public function rfqSimpanBarang(Request $request, $id_rfq)
-    {
-        $rfq = RfqModel::find($id_rfq);;
-        $rfq->status = $rfq->status + 1;
-        $rfq->save();
-        return redirect('/rfq/data/list/' . $request->id_rfq);
-    }
 
-    public function rfqPembayaran(Request $request, $id_rfq)
+    public function generateInvoice($id)
     {
-        $rfq = RfqModel::find($id_rfq);
-        $rfq->pembayaran = $request->payment;
-        $rfq->status = $rfq->status + 1;
-        $rfq->save();
-        return redirect('/rfq/data/list/' . $request->id_rfq);
+        // Ambil data RFQ berdasarkan ID
+        $rfq = RfqModel::findOrFail($id);
+
+        // Ambil data vendor berdasarkan vendor_id di RFQ
+        $vendor = VendorModel::findOrFail($rfq->vendor_id);
+
+        // Ambil list produk berdasarkan RFQ
+        $rfqList = RfqListModel::with('produk')->where('vendor_id', $vendor->id)->get();
+
+        // Data yang akan dikirim ke view
+        $data = [
+            'rfq' => $rfq,
+            'vendor' => $vendor,
+            'rfqList' => $rfqList,
+        ];
+
+        // Load view PDF dan kirim data
+        $pdf = Pdf::loadView('RFQ.rfqInvoice', $data);
+
+        // Return PDF untuk di-download atau ditampilkan
+        return $pdf->stream('invoice.pdf');
     }
 
     public function rfqConfirmPembayaran(Request $request, $id_rfq)
     {
-        $rfqlist = RfqListModel::Where('id_rfq', $id_rfq)->get();
-        foreach ($rfqlist as $item) {
-            $product = ProdukModel::find($item->kode_produk);
-            $product->qty = $product->qty + $item->qty;
-            $product->save();
-        }
         $rfq = RfqModel::find($id_rfq);
         $rfq->status = $rfq->status + 1;
         $rfq->save();
-        return redirect(Route('RfqTampil'));
+        return redirect('/rfq/data');
     }
 
     public function rfqDelete($id_rfq)

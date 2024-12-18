@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rfq_list', function (Blueprint $table) {
+        Schema::create('t_po', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_po');
+            $table->date('tgl_pembayaran');
+            $table->string('pembayaran')->nullable();
+            $table->string('gambar')->nullable();
             $table->unsignedBigInteger('rfq_id');
-            $table->unsignedBigInteger('vendor_id');
-            $table->unsignedBigInteger('produk_id');
-            $table->Integer('qty');
-            $table->string('harga');
             $table->timestamps();
 
             $table->foreign('rfq_id')->references('id')->on('t_rfq')->onDelete('cascade');
-            $table->foreign('vendor_id')->references('id')->on('t_vendor')->onDelete('cascade');
-            $table->foreign('produk_id')->references('id')->on('t_produk')->onDelete('cascade');
         });
     }
 
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rfq_list');
+        Schema::dropIfExists('t_po');
     }
 };

@@ -3,6 +3,11 @@
     <div class="container-fluid mb-3">
         <a href="{{ route('InputRfq') }}" class="btn btn-primary">Masukan RFQ</a>
     </div>
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @elseif(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
     <div class="card">
         <div class="card-body">
             <br>
@@ -34,14 +39,22 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($item->status == 0)
-                                        <span class="badge badge-secondary " style="color: black">Draft</span>
-                                    @elseif($item->status == 1)
-                                        <span class="badge badge-primary" style="color: black">Belum Dibayar</span>
-                                    @elseif($item->status == 2)
-                                        <span class="badge badge-warning" style="color: black">Menunggu Pembayaran</span>
-                                    @elseif($item->status == 3)
-                                        <span class="badge badge-secondary" style="color: black">Selesai</span>
+                                    @if ($item->status == 1)
+                                        <form action="/rfq/data/list/Pembayaran/confirm/{{ $item->id }}" method="post">
+                                            @method('put')
+                                            {{ csrf_field() }}
+                                            <button type="submit" onclick="return confirm('Proses Mark as todo?');"
+                                                class="btn btn-info">Confirm</button>
+                                        </form>
+                                    @elseif ($item->status == 2)
+                                        <div class="d-flex gap-2">
+                                            <!-- Button Invoice -->
+                                            <a href="{{ route('invoice.generate', $item->id) }}" class="btn btn-warning">
+                                                Invoice
+                                            </a>
+                                        </div>
+                                    @elseif ($item->status == 3)
+                                        <span class="badge text-bg-primary">Selesai</span>
                                     @endif
                                 </td>
                                 <td><a href="{{ url('/rfq/data/list/' . $item->id) }}"

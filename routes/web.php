@@ -17,6 +17,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\POController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,16 +100,22 @@ Route::get('/rfq/data',[RfqController::class,'rfqTampil'])->name('RfqTampil');
 Route::get('/rfq/data/input',[RfqController::class,'inputRfqTampil'])->name('InputRfq');
 Route::get('/get-bahan-by-vendor/{vendorId}', [RfqController::class, 'getBahanByVendor']);
 Route::get('/get-rfq-by-vendor/{vendorId}', [RfqController::class, 'getRfqByVendor']);
+Route::get('rfq/invoice/{id}', [RfqController::class, 'generateInvoice'])->name('invoice.generate');
 Route::post('/rfq-list/data/input/proses',[RfqController::class,'inputRfqList']);
 Route::post('/rfq/data/input/proses',[RfqController::class,'InputRFQ'])->name('rfq.input.proses');
 Route::get('/rfq/data/list/{id_rfq}',[RfqController::class,'rfqList'])->name('RfqList');
 Route::post('/rfq/data/list/proses',[RfqController::class,'ListProses'])->name('ListProses');
-Route::post('/rfq/data/list/saveitem/{id_rfq}',[RfqController::class,'rfqSimpanBarang'])->name('RfqListSimpan');
-Route::post('/rfq/data/list/Pembayaran/{id_rfq}',[RfqController::class,'rfqPembayaran'])->name('RfqListPembayaran');
-Route::post('/rfq/data/list/Pembayaran/confirm/{id_rfq}',[RfqController::class,'rfqConfirmPembayaran'])->name('RfqListPembayaranComfirm');
+Route::put('/rfq/data/list/Pembayaran/{id_rfq}',[RfqController::class,'rfqPembayaran'])->name('rfq.pembayaran');
+Route::put('/rfq/data/list/Pembayaran/confirm/{id_rfq}',[RfqController::class,'rfqConfirmPembayaran'])->name('RfqListPembayaranComfirm');
 Route::put('/rfq/update/{id_rfq}',[RfqController::class,'updateRfq'])->name('rfq.update.proses');
 Route::delete('/rfq/delete/{id_rfq}',[RfqController::class,'rfqDelete']);
 Route::delete('/rfq-list/delete/{id_rfqList}',[RfqController::class,'rfqListDelete']);
+
+//PO
+Route::get('/po/data',[POController::class,'index'])->name('PoTampil');
+Route::get('/po/data/list/{id_rfq}',[POController::class,'poList'])->name('poList');
+Route::post('/po/data/input',[POController::class,'store'])->name('po.input.proses');
+Route::get('/po/data/report/{id}',[POController::class,'report'])->name('po.report.proses');
 
 //SQ
 Route::get('/SQ/data',[SQController::class,'tampilSQ'])->name('sqTampil');

@@ -26,20 +26,22 @@
               </ul>
           </li>
           <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#manufacturing-nav" data-bs-toggle="collapse" href="#">
-                  <i class="bi bi-building-fill-gear"></i><span>Manufacturing</span><i class="bi bi-chevron-down ms-auto"></i>
+              <a class="nav-link collapsed" data-bs-target="#manufacturing-nav" data-bs-toggle="collapse"
+                  href="#">
+                  <i class="bi bi-building-fill-gear"></i><span>Manufacturing</span><i
+                      class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="manufacturing-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                   <li>
-                    <a class="nav-link collapsed" href="{{ route('tampilBom') }}">
-                        <i class="bi bi-box2-fill""></i><span>Bill Of Material</span>
-                    </a>
+                      <a class="nav-link collapsed" href="{{ route('tampilBom') }}">
+                          <i class="bi bi-box2-fill""></i><span>Bill Of Material</span>
+                      </a>
                   </li>
                   <li>
-                    <a class="nav-link collapsed" href="{{ route('tampilMO') }}">
-                        <i class="bi bi-clipboard-fill"></i><span>Produksi</span>
-                    </a>
-                </li>
+                      <a class="nav-link collapsed" href="{{ route('tampilMO') }}">
+                          <i class="bi bi-clipboard-fill"></i><span>Produksi</span>
+                      </a>
+                  </li>
               </ul>
           </li>
           <li class="nav-item">
@@ -57,6 +59,11 @@
                           <i class="bi bi-calendar2-check-fill"></i><span>RFQ</span>
                       </a>
                   </li>
+                  <li>
+                      <a class="nav-link collapsed" href="{{ route('PoTampil') }}">
+                          <i class="bi bi-cart-check-fill"></i><span>Payment Order</span>
+                      </a>
+                  </li>
               </ul>
           </li>
           <!-- End Baptis Nav -->
@@ -65,12 +72,12 @@
                   <i class="bi bi-file-person-fill"></i><span>Sales</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="sales-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a class="nav-link collapsed" href="{{ route('User') }}">
-                        <i class="bi bi-person-fill"></i><span>Pelanggan</span>
-                    </a>
-                </li>  
-                <li>
+                  <li>
+                      <a class="nav-link collapsed" href="{{ route('User') }}">
+                          <i class="bi bi-person-fill"></i><span>Pelanggan</span>
+                      </a>
+                  </li>
+                  <li>
                       <a class="nav-link collapsed" href="{{ route('sqTampil') }}">
                           <i class="bi bi-journal-bookmark-fill"></i><span>Penjualan</span>
                       </a>

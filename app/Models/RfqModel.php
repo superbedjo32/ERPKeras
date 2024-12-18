@@ -19,4 +19,20 @@ class RfqModel extends Model
         'status',
     ];
     public $timestamps = false;
+
+    public function vendor()
+    {
+        return $this->belongsTo(VendorModel::class, 'vendor_id');
+    }
+
+    // Relasi ke RfqList
+    public function rfqList()
+    {
+        return $this->hasMany(RfqListModel::class, 'rfq_id');
+    }
+
+    public function po()
+    {
+        return $this->hasMany(POModel::class, 'rfq_id');
+    }
 }

@@ -12,6 +12,7 @@ class RfqListModel extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $fillable = [
+        'rfq_id',
         'vendor_id',
         'produk_id',
         'qty',
