@@ -39,9 +39,9 @@
                                     </td>
                                     <td>{{ $item->total_harga }}</td>
                                     <td>
-                                        @if ($item->metode_pembayaran == 1)
+                                        @if ($item->pembayaran == 1)
                                             <span class="badge badge-primary"style="color: black">Cash</span>
-                                        @elseif($item->metode_pembayaran == 2)
+                                        @elseif($item->pembayaran == 2)
                                             <span class="badge badge-primary"style="color: black">Transfer</span>
                                         @endif
                                     </td>
@@ -53,9 +53,9 @@
                                             <a href="{{ url('/SQ/data/list/cek/' . $item->id) }}" class="btn btn-warning"
                                                 role="button">Buat Pembayaran</a>
                                         @elseif ($item->status > 2)
-                                        <a href="{{ url('/SQ/data/list/cek/' . $item->id) }}" class="btn btn-success bi bi-printer"
-                                            role="button"></a>
-                                            @endif
+                                            <a href="{{ url('/SQ/data/list/cek/' . $item->id) }}"
+                                                class="btn btn-success bi bi-printer" role="button"></a>
+                                        @endif
                                         <form action="{{ url('/SQ/data/hapus/' . $item->id) }}" method="post">
                                             @method('delete')
                                             {{ csrf_field() }}

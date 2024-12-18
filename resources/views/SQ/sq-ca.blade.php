@@ -6,7 +6,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">ID SQ</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="id_sq" id="id_sq" value="{{ $sq->id_sq }}"
+                    <input type="text" class="form-control" name="id_sq" id="id_sq" value="{{ $sq->kode_sq }}"
                         readonly>
                 </div>
             </div>
@@ -32,7 +32,6 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Kode</th>
                             <th scope="col">Nama Bahan</th>
                             <th scope="col">Banyak</th>
                             <th scope="col">Satuan</th>
@@ -46,7 +45,6 @@
                             @foreach ($sqList as $item)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $item->kode_produk }}</td>
                                     <td>{{ $item->nama_produk }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>{{ $item->satuan }}</td>

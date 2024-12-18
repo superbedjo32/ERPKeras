@@ -58,7 +58,7 @@ class RfqController extends Controller
                     'tgl_transaksi' => now(),
                     'total_harga' => '', // Set default value
                     'pembayaran' => '', // Set default value
-                    'status' => 1 // Set default status
+                    'status' => 0 // Set default status
                 ]);
             }
 
@@ -92,7 +92,7 @@ class RfqController extends Controller
             'tgl_transaksi' => Carbon::now()->toDateTimeString(),
             'total_harga' => $request->total_harga,
             'pembayaran' => $request->pembayaran,
-            'status' => 1,
+            'status' => 0,
         ]);
         return redirect('/rfq/data');
     }

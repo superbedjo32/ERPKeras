@@ -9,11 +9,14 @@ class SQListModel extends Model
 {
     use HasFactory;
     protected $table = "t_sq_list";
-    protected $primaryKey = 'id_sq_list';
+    protected $primaryKey = 'id';
     public $incrementing = false;
-    protected $fillable = ['id_sq_list', 'id_sq', 'kode_produk',
-        'qty','satuan', 'total'
+    protected $fillable = [
+        'sq_id',
+        'produk_id',
+        'qty',
+        'satuan',
+        'total'
     ];
     public $timestamps = false;
-    
 }

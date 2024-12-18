@@ -77,12 +77,12 @@
                 <td>{{$total}}</td>
                 @if($sq->status == 0)
                 <td>
-                    <form action="{{ url('/SQ/data/hapus_list/' . $item->id_sq_list) }}" method="post">
+                    <form action="{{ url('/SQ/data/hapus_list/' . $item->id) }}" method="post">
                         @method('delete')
                         {{ csrf_field() }}
-                        <input type="hidden" name="id_sq" value="{{ $item->id_sq }}">
+                        <input type="hidden" name="id_sq" value="{{ $item->sq_id }}">
                         <button type="submit" onclick="return confirm('Yakin hapus Barang '+'{{ $item->nama_produk }}?');" class="btn btn-danger delete-confirm my-1 bi bi-trash3-fill"></button>
-                    </form>                    
+                    </form>
                 </td>
                 @else
                 <td>
@@ -99,7 +99,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <br>  
+            <br>
             <div class="row mt-auto p-2 bd-highlight">
                 <label for="text_harga" class="font-weight-bold"> Total Harga : </label>
                 <label for="total_harga" id="val"> {{$sq->total_harga}}</label>

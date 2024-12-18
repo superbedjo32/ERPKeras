@@ -39,7 +39,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($item->status == 1)
+                                    @if ($item->status == 0)
+                                        <span class="badge text-bg-info">List Bahan</span>
+                                    @elseif ($item->status == 1)
                                         <form action="/rfq/data/list/Pembayaran/confirm/{{ $item->id }}" method="post">
                                             @method('put')
                                             {{ csrf_field() }}
@@ -57,8 +59,11 @@
                                         <span class="badge text-bg-primary">Selesai</span>
                                     @endif
                                 </td>
-                                <td><a href="{{ url('/rfq/data/list/' . $item->id) }}"
-                                        class="btn btn-warning bi bi-pencil-square" role="button"></a>
+                                <td>
+                                    @if ($item->status == 0)
+                                        <a href="{{ url('/rfq/data/list/' . $item->id) }}"
+                                            class="btn btn-warning bi bi-pencil-square" role="button"></a>
+                                    @endif
                                     <form action="{{ url('/rfq/delete/' . $item->id) }}" method="post">
                                         @method('delete')
                                         {{ csrf_field() }}
@@ -67,10 +72,6 @@
                                             class="btn btn-danger delete-confirm my-1 bi bi-trash3-fill">
                                         </button>
                                     </form>
-                                    @if ($item->status == 3)
-                                        <a href="#" class="btn btn-success bi bi-printer"></a>
-                                    @elseif($item->status != 3)
-                                    @endif
                                 </td>
                             </tr>
                         @endforeach

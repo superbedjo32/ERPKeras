@@ -12,7 +12,7 @@ class SQController extends Controller
 {
     public function tampilSQ()
     {
-        $SQ = SQModel::join('t_vendor', 't_sq.id_pelanggan', '=', 't_vendor.id')
+        $SQ = SQModel::join('t_vendor', 't_sq.vendor_id', '=', 't_vendor.id')
             ->get(['t_sq.*', 't_vendor.nama_vendor', 't_vendor.alamat']);
         return view('SQ/sq', ['sq' => $SQ]);
     }
@@ -30,23 +30,23 @@ class SQController extends Controller
         $jumlah = SQModel::count();
         $id_sq = 'SQ' . str_pad($jumlah + 1, 3, '0', STR_PAD_LEFT);
         SQModel::create([
-            'id_sq' => $id_sq,
-            'id_pelanggan' => $request->id_pelanggan,
+            'kode_sq' => $id_sq,
+            'vendor_id' => $request->id_pelanggan,
             'tanggal_transaksi' => $tanggal,
             'status' => 0,
             'total_harga' => 0,
-            'metode_pembayaran' => 0
+            'pembayaran' => 0
         ]);
         return redirect('/SQ/data');
     }
 
     public function SQList($id_sq)
     {
-        $sq = SQModel::join('t_vendor', 't_sq.id_pelanggan', '=', 't_vendor.id')
+        $sq = SQModel::join('t_vendor', 't_sq.vendor_id', '=', 't_vendor.id')
             ->where('t_sq.id', $id_sq)
             ->first(['t_sq.*', 't_vendor.nama_vendor', 't_vendor.alamat']);
-        $sqList = SQListModel::join('t_produk', 't_sq_list.kode_produk', '=', 't_produk.id')
-            ->where('t_sq_list.id_sq', $id_sq)
+        $sqList = SQListModel::join('t_produk', 't_sq_list.produk_id', '=', 't_produk.id')
+            ->where('t_sq_list.sq_id', $id_sq)
             ->get(['t_sq_list.*', 't_produk.nama_produk', 't_produk.harga']);
         $produk = ProdukModel::where('status', 1)->get();
 
@@ -55,18 +55,20 @@ class SQController extends Controller
 
     public function sqUploadItems(Request $request)
     {
-        $check = SQListModel::where('kode_produk', $request->kode_produk)
-            ->where('id_sq', $request->id_sq)
+        $check = SQListModel::where('produk_id', $request->kode_produk)
+            ->where('sq_id', $request->id_sq)
             ->first();
+            // dd($check);
         if ($check != null) {
-            $list = SQListModel::find($check->id_sq_list);
+            $list = SQListModel::find($check->sq_id);
+            // dd($list);
             $jumlah_baru = $list->qty + $request->qty;
             $list->qty = $jumlah_baru;
             $list->save();
         } else {
             SQListModel::create([
-                'id_sq' => $request->id_sq,
-                'kode_produk' => $request->kode_produk,
+                'sq_id' => $request->id_sq,
+                'produk_id' => $request->kode_produk,
                 'qty' => $request->qty,
                 'satuan' => $request->satuan
             ]);
@@ -77,9 +79,10 @@ class SQController extends Controller
     public function calcPrice($id_sq)
     {
         $total_harga = 0;
-        $lists = SQListModel::where('id_sq', $id_sq)->get();
+        $lists = SQListModel::where('sq_id', $id_sq)->get();
         foreach ($lists as $i) {
-            $product = ProdukModel::find($i->kode_produk);
+            $product = ProdukModel::find($i->produk_id);
+
             $harga = $product->harga;
             $total_harga = $total_harga + ($harga * $i->qty);
 
@@ -103,12 +106,12 @@ class SQController extends Controller
 
     public function caItems($id_sq)
     {
-        $sq = SqModel::join('t_vendor', 't_sq.id_pelanggan', '=', 't_vendor.id')
+        $sq = SqModel::join('t_vendor', 't_sq.vendor_id', '=', 't_vendor.id')
             ->where('t_sq.id', $id_sq)
             ->first(['t_sq.*', 't_vendor.nama_vendor', 't_vendor.alamat']);
         $id_sq = $sq->id;
-        $sqList = SQListModel::join('t_produk', 't_sq_list.kode_produk', '=', 't_produk.id')
-            ->where('t_sq_list.id_sq', $id_sq)
+        $sqList = SQListModel::join('t_produk', 't_sq_list.produk_id', '=', 't_produk.id')
+            ->where('t_sq_list.sq_id', $id_sq)
             ->get(['t_sq_list.*', 't_produk.nama_produk', 't_produk.harga', 't_produk.qty as l']);
         $produk = ProdukModel::where('status', 1)->get();
         $avail = $this->getAvailability($sqList, $sq);
@@ -118,7 +121,7 @@ class SQController extends Controller
     public function salesCreateBill(Request $request)
     {
         $sq = SQModel::find($request->id_sq);
-        $sq->metode_pembayaran = $request->metode_pembayaran;
+        $sq->pembayaran = $request->metode_pembayaran;
         $sq->status = $sq->status + 1;
         $sq->save();
         return $this->caItems($request->id_sq);
@@ -140,14 +143,14 @@ class SQController extends Controller
     public function confirmBill(Request $request)
     {
 
-        $sqList = SQListModel::Where('id_sq', $request->id_sq)->get();
+        $sqList = SQListModel::Where('sq_id', $request->id_sq)->get();
         foreach ($sqList as $item) {
-            $product = ProdukModel::find($item->kode_produk);
+            $product = ProdukModel::find($item->produk_id);
             $product->qty = $product->qty - $item->qty;
             $product->save();
         }
         $sq = SQModel::find($request->id_sq);
-        $sq->metode_pembayaran = $sq->metode_pembayaran;
+        $sq->pembayaran = $sq->pembayaran;
         $sq->status = $sq->status + 1;
         $sq->save();
         return redirect('/SQ/data');
@@ -156,15 +159,15 @@ class SQController extends Controller
     public function hapusSQ($id_sq)
     {
         SQModel::find($id_sq)->delete();
-        SQListModel::where('id_sq', $id_sq)->delete();
+        SQListModel::where('sq_id', $id_sq)->delete();
         return redirect('/SQ/data');
     }
 
     public function hapusSQList($id_sq_list)
     {
         $sq_list = SQListModel::find($id_sq_list);
-        $id_sq = $sq_list->id_sq;
-        $deleted_price = $sq_list->total; 
+        $id_sq = $sq_list->sq_id;
+        $deleted_price = $sq_list->total;
         $sq_list->delete();
 
         $sq = SQModel::find($id_sq);

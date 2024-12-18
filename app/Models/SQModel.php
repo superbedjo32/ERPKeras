@@ -10,8 +10,13 @@ class SQModel extends Model
     protected $table = "t_sq";
     protected $primaryKey = 'id';
     public $incrementing = false;
-    protected $fillable = ['id_sq', 'id_pelanggan', 'tanggal_transaksi', 
-        'status', 'total_harga','metode_pembayaran'
+    protected $fillable = [
+        'kode_sq',
+        'vendor_id',
+        'tanggal_transaksi',
+        'status',
+        'total_harga',
+        'pembayaran'
     ];
     public $timestamps = false;
 }

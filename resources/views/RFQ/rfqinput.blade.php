@@ -264,7 +264,7 @@
                             <div class="card">
                                 <div class="card-body mt-3">
                                     <!-- Vendor ID -->
-                                    <input type="text" id="vendor-id" name="vendor_id" readonly class="form-control" value="${vendorId}">
+                                    <input type="hidden" id="vendor-id" name="vendor_id" readonly class="form-control" value="${vendorId}">
 
                                     <!-- Total Harga -->
                                     <div class="row mb-3">

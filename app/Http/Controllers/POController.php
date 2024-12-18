@@ -129,13 +129,27 @@ class POController extends Controller
             // Insert ke database PO
             POModel::create($data);
 
-            // Ubah status di tabel rfqModel menjadi 3
+            // Ambil semua data dari rfq_list berdasarkan rfq_id
+            $rfqLists = DB::table('rfq_list')->where('rfq_id', $request->rfq_id)->get();
+
+            foreach ($rfqLists as $rfqList) {
+                // Ambil data produk berdasarkan produk_id
+                $produk = ProdukModel::findOrFail($rfqList->produk_id);
+
+                // Tambahkan qty dari rfq_list ke qty produk
+                $produk->qty += $rfqList->qty;
+
+                // Simpan perubahan pada produk
+                $produk->save();
+            }
+
+            // Ubah status di tabel rfq menjadi 3
             $rfq->status = 3;
             $rfq->save();
 
             DB::commit();
 
-            return redirect('/po/data');
+            return redirect('/po/data')->with('success', 'Data PO berhasil disimpan.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Gagal menyimpan data PO: ' . $e->getMessage());

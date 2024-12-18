@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_reference');
             $table->string('nama_produk');
-            $table->integer('harga');
+            $table->integer('harga')->nullable();
             $table->text('deskripsi')->nullable();
             $table->integer('qty')->nullable();
             $table->string('gambar')->nullable();

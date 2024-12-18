@@ -61,7 +61,7 @@
                   </li>
                   <li>
                       <a class="nav-link collapsed" href="{{ route('PoTampil') }}">
-                          <i class="bi bi-cart-check-fill"></i><span>Payment Order</span>
+                          <i class="bi bi-cart-check-fill"></i><span>Purchase Order</span>
                       </a>
                   </li>
               </ul>
@@ -74,61 +74,19 @@
               <ul id="sales-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
                       <a class="nav-link collapsed" href="{{ route('User') }}">
-                          <i class="bi bi-person-fill"></i><span>Pelanggan</span>
+                          <i class="bi bi-person-fill"></i><span>Customer</span>
                       </a>
                   </li>
                   <li>
                       <a class="nav-link collapsed" href="{{ route('sqTampil') }}">
-                          <i class="bi bi-journal-bookmark-fill"></i><span>Penjualan</span>
+                          <i class="bi bi-journal-bookmark-fill"></i><span>Sales Order</span>
                       </a>
                   </li>
               </ul>
           </li>
 
 
-          <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#accounting-nav" data-bs-toggle="collapse" href="#">
-                  <i class="bi bi-credit-card-fill"></i><span>Accounting</span><i
-                      class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="accounting-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-                  <li>
-                      <a class="nav-link collapsed" href="{{ route('bill') }}">
-                          <i class="bi bi-person-fill"></i><span>Pembelian</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a class="nav-link collapsed" href="{{ route('invoice') }}">
-                          <i class="bi bi-person-fill"></i><span>Penjualan</span>
-                      </a>
-                  </li>
-              </ul>
-          </li>
-
-          <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#employees-nav" data-bs-toggle="collapse" href="#">
-                  <i class="bi bi-person-vcard-fill"></i><span>Employees</span><i
-                      class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="employees-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                  <li>
-                      <a class="nav-link collapsed" href="{{ route('Departement') }}">
-                          <i class="bi bi-building"></i><span>Departemen</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a class="nav-link collapsed" href="{{ route('Job') }}">
-                          <i class="bi bi-person-fill"></i><span>Posisi Jabatan</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a class="nav-link collapsed" href="{{ route('Karyawan') }}">
-                          <i class="bi bi-person-fill"></i><span>Karyawan</span>
-                      </a>
-                  </li>
-              </ul>
-          </li>
           <!-- End Renungan Nav -->
 
           {{-- <li class="nav-item">
